@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Controllers
+use App\Http\Controllers\Admin\PastaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +18,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('homepage');
+
+// --------------------------------------------------------------------------------------
+
+Route::resource('pastas', PastaController::class);
+
+// ALTERNATIVA A:
+// Route::get('/pastas', [PastaController::class, 'index'])->name('pastas.index');
+// Route::post('/pastas', [PastaController::class, 'store'])->name('pastas.store');
+// Route::get('/pastas/create', [PastaController::class, 'create'])->name('pastas.create');
+// Route::get('/pastas/{pasta}', [PastaController::class, 'show'])->name('pastas.show');
+// Route::get('/pastas/{pasta}/edit', [PastaController::class, 'edit'])->name('pastas.edit');
+// Route::put('/pastas/{pasta}', [PastaController::class, 'update'])->name('pastas.update');
+// Route::delete('/pastas/{pasta}', [PastaController::class, 'destroy'])->name('pastas.destroy');

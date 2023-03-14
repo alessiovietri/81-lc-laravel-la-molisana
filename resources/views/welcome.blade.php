@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel 9 + Bootstrap Template</title>
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
 
-        {{-- Includiamo gli assets con la direttiva @vite --}}
-        @vite('resources/js/app.js')
-    </head>
-    <body>
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">La Molisana</h1>
 
-        <main>
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center">
-
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="{{ Vite::asset('resources/img/laravel.png') }}" alt="">
-
-                                <h1 class="card-title">Laravel 9 + Bootstrap Template</h1>
-                            </div>
-                        </div>
-
+                        <a href="{{ route('pastas.index') }}" class="btn btn-primary">
+                            Vedi tutti i prodotti
+                        </a>
                     </div>
                 </div>
-            </div>
-        </main>
 
-    </body>
-</html>
+            </div>
+        </div>
+    </div>
+@endsection
