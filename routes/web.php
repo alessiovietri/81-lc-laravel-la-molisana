@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Controllers
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\Admin\PastaController;
 
 /*
@@ -16,9 +17,7 @@ use App\Http\Controllers\Admin\PastaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('homepage');
+Route::get('/', [MainController::class, 'index'])->name('homepage');
 
 // --------------------------------------------------------------------------------------
 

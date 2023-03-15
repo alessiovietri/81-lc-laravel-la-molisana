@@ -2,9 +2,10 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col">
                 <h1>{{ $pasta->title }}</h1>
+                
                 <a href="{{ route('pastas.index') }}" class="btn btn-primary">
                     Torna indietro
                 </a>
