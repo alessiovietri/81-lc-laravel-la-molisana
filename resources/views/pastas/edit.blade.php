@@ -13,6 +13,16 @@
         </div>
         <div class="row">
             <div class="col mb-3">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ route('pastas.update', $pasta->id) }}" method="POST">
                     @csrf
 
@@ -25,7 +35,7 @@
                             class="form-control"
                             name="title"
                             id="title"
-                            value="{{ $pasta->title }}"
+                            value="{{ old('title', $pasta->title) }}"
                             required
                             maxlength="255"
                             placeholder="Inserisci il titolo...">
@@ -33,10 +43,10 @@
                     <div class="mb-3">
                         <label for="type" class="form-label">Tipo *</label>
                         <select class="form-select" name="type" id="type" required>
-                            <option {{ !isset($pasta->type) ? 'selected' : '' }}>Seleziona un tipo</option>
-                            <option value="lunga" {{ $pasta->type == 'lunga' ? 'selected' : '' }}>Lunga</option>
-                            <option value="corta" {{ $pasta->type == 'corta' ? 'selected' : '' }}>Corta</option>
-                            <option value="cortissima" {{ $pasta->type == 'cortissima' ? 'selected' : '' }}>Cortissima</option>
+                            <option>Seleziona un tipo</option>
+                            <option value="lunga" {{ old('type', $pasta->type) == 'lunga' ? 'selected' : '' }}>Lunga</option>
+                            <option value="corta" {{ old('type', $pasta->type) == 'corta' ? 'selected' : '' }}>Corta</option>
+                            <option value="cortissima" {{ old('type', $pasta->type) == 'cortissima' ? 'selected' : '' }}>Cortissima</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -46,7 +56,7 @@
                             class="form-control"
                             name="cooking_time"
                             id="cooking_time"
-                            value="{{ $pasta->cooking_time }}"
+                            value="{{ old('cooking_time', $pasta->cooking_time) }}"
                             required
                             min="1"
                             placeholder="Inserisci il tempo di cottura...">
@@ -58,14 +68,14 @@
                             class="form-control"
                             name="weight"
                             id="weight"
-                            value="{{ $pasta->weight }}"
+                            value="{{ old('weight', $pasta->weight) }}"
                             required
-                            min="1"
+                            min="100"
                             placeholder="Inserisci il peso...">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrizione</label>
-                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Inserisci una descrizione...">{{ $pasta->description }}</textarea>
+                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Inserisci una descrizione...">{{ old('description', $pasta->description) }}</textarea>
                     </div>
                     <div class="mb-3">
                         <p>

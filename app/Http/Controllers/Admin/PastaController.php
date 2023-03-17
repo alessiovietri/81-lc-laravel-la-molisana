@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 // Models
 use App\Models\Pasta;
 
+// Helpers
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
+// Requests
+use App\Http\Requests\PastaRequest;
+
 class PastaController extends Controller
 {
     /**
@@ -33,15 +40,50 @@ class PastaController extends Controller
     }
 
     /**
+     *
+     * 1. perché dà errore su description           OK
+     * 2. vecchi dati                               OK
+     * 3. localizzazione                            OK
+     * 4. messaggi d'errore personalizzati          OK
+     * 5. stile campi validati in view              OK
+     * 6. terzo metodo
+     *
+     */
+
+    private function validateData($data)
+    {
+        // Validiamo i nostri dati
+        $validator = Validator::make($data, [
+            'title' => 'required|max:255',
+            'type' => [
+                'required',
+                Rule::in(['lunga', 'corta', 'cortissima'])
+            ],
+            'cooking_time' => 'required|numeric|min:1',
+            'weight' => 'required|numeric|min:100',
+            'description' => 'nullable|max:4096'
+        ], [
+            'title.required' => 'TITOLO OBBLIGATORIO!!!',
+            'type.required' => 'TIPO OBBLIGATORIO!!!',
+            'cooking_time.required' => 'TEMPO DI COTTURA OBBLIGATORIO!!!',
+        ])->validate();
+
+        return $validator;
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PastaRequest $request)
     {
-        $data = $request->all();
+        // Validiamo i nostri dati
+        // $data = $this->validateData($request->all());
+        $data = $request->validated();
 
+        // Utilizziamo i nostri dati
         $singlePasta = new Pasta;
         $singlePasta->title = $data['title'];
         $singlePasta->type = $data['type'];
@@ -87,12 +129,15 @@ class PastaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PastaRequest $request, $id)
     {
         $pasta = Pasta::findOrFail($id);
 
-        $data = $request->all();
+        // Validiamo i nostri dati
+        // $data = $this->validateData($request->all());
+        $data = $request->validated();
 
+        // Utilizziamo i nostri dati
         $pasta->update($data);
 
         // Alternativa a:
