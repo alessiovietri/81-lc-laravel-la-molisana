@@ -52,7 +52,7 @@ class PastaController extends Controller
 
     private function validateData($data)
     {
-        // Validiamo i nostri dati
+        // Validiamo i nostri dati con molta attenzione
         $validator = Validator::make($data, [
             'title' => 'required|max:255',
             'type' => [
